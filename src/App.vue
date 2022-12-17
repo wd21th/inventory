@@ -9,7 +9,22 @@
   <div class="screen">
     <div class="screen__wrapper">
       <div class="screen__content">
-        <div class="left-sidebar"></div>
+        <div class="left-sidebar">
+          <div class="left-sidebar__image">
+            <img src="./assets/images/left-bar.png" alt="image">
+          </div>
+          <div class="left-sidebar__info info">
+            <div class="info__title sceleton"></div>
+            <div class="info__description">
+              <div class="info__description-item sceleton"></div>
+              <div class="info__description-item sceleton"></div>
+              <div class="info__description-item sceleton"></div>
+              <div class="info__description-item sceleton"></div>
+              <div class="info__description-item sceleton"></div>
+              <div class="info__description-item sceleton"></div>
+            </div>
+          </div>
+        </div>
         <div class="inventory"></div>
       </div>
       <footer class="screen__footer footer">
@@ -47,7 +62,66 @@ html {
  
 }
 
-.inventory{}.left-sidebar{}.screen{
+.inventory{}.left-sidebar{
+  background: #262626;
+  border: 1px solid #4D4D4D;
+  border-radius: 12px;
+  padding: 18px 14px;
+  margin-right: 24px;
+  &__image{
+    margin-bottom: 20px;
+    position: relative;
+    // after element
+    &::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      border-radius: 8px;
+      
+    }
+  }
+  
+  .info{&__description{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }&__description-item{
+    height: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  &__description-item:nth-child(1){
+    width: 70%;
+  }
+  &__description-item:nth-child(2){
+    width: 100%;
+  }
+  &__description-item:nth-child(3){
+    width: 90%;
+  }
+  &__description-item:nth-child(4){
+    width: 80%;
+  }
+  &__description-item:nth-child(5){
+    width: 70%;
+  }
+  &__description-item:nth-child(6){
+    width: 40%;
+  }
+
+  &__title{
+    height: 18px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }}.left-sidebar{&__info{}}
+}.screen{
   // full screen
   width: 100vw;
   height: 100vh;
@@ -66,6 +140,7 @@ html {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    margin-bottom: 24px;
   }&__footer{
     background: #262626;
     /* Primary Border */
