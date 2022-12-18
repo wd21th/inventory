@@ -9,24 +9,24 @@
   <div class="screen">
     <div class="screen__wrapper">
       <div class="screen__content">
-        <div class="left-sidebar">
+        <div class="left-sidebar" :class="{'light-theme': useLightTheme}">
           <div class="left-sidebar__image">
             <img src="./assets/images/left-bar.png" alt="image">
           </div>
           <div class="left-sidebar__info info">
-            <div class="info__title sceleton"></div>
+            <div class="info__title sceleton" :class="{'light-theme': useLightTheme}"></div>
             <div class="info__description">
-              <div class="info__description-item sceleton"></div>
-              <div class="info__description-item sceleton"></div>
-              <div class="info__description-item sceleton"></div>
-              <div class="info__description-item sceleton"></div>
-              <div class="info__description-item sceleton"></div>
-              <div class="info__description-item sceleton"></div>
+              <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+              <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+              <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+              <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+              <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+              <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
             </div>
           </div>
         </div>
         <div class="inventory">
-          <table class="inventory__table table">
+          <table class="inventory__table table" :class="{'light-theme': useLightTheme}">
             <tbody class="table__body">
               <tr class="inventory__table-row" v-for="row, rowIndex in matrix" :key="rowIndex">
                 <td class="inventory__table-cell"  v-for="cell, cellIndex in row" :key="cellIndex">
@@ -54,21 +54,22 @@
                         >
                         </div>
                       </div>
-                      <ng-template>
-                        <span
-                          class="inventory__count"
-                          v-if="matrix[rowIndex][cellIndex].count > 1"
-                        >
-                          {{matrix[rowIndex][cellIndex]?.count}}
-                        </span>
-                      </ng-template>
+                      
+                      <span
+                        class="inventory__count"
+                        :class="{'light-theme': useLightTheme}"
+                        v-if="matrix[rowIndex][cellIndex].count > 1"
+                      >
+                        {{matrix[rowIndex][cellIndex]?.count}}
+                      </span>
+                      
                     </div>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="inventory__info"   :class="{active: edit}">
+          <div class="inventory__info"   :class="{active: edit, 'light-theme': useLightTheme}">
             <div class="cross-icon" @click="closeInventory">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 1.05L10.95 0L6 4.95L1.05 0L0 1.05L4.95 6L0 10.95L1.05 12L6 7.05L10.95 12L12 10.95L7.05 6L12 1.05Z" fill="white"/>
@@ -83,15 +84,15 @@
               </div>
               <div class="detail__separator"></div>
               <div class="detail__info">
-                <div class="detail__title sceleton">
+                <div class="detail__title sceleton" :class="{'light-theme': useLightTheme}">
                   
                 </div>
                 <div class="detail__description">
-                    <div class="detail__description-item sceleton"></div>
-                    <div class="detail__description-item sceleton"></div>
-                    <div class="detail__description-item sceleton"></div>
-                    <div class="detail__description-item sceleton"></div>
-                    <div class="detail__description-item sceleton"></div>
+                    <div class="detail__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+                    <div class="detail__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+                    <div class="detail__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+                    <div class="detail__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
+                    <div class="detail__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
 
                 </div>
               </div>
@@ -101,7 +102,10 @@
             <div class="delete-options" v-if="deleteInventory">
               <input          
                 class="delete-options__count"
+                :class="{'light-theme': useLightTheme}"                
+                
                 placeholder="Введите количество"
+                
                 type="number"
                 @input="deleteInventoryCount = $event.target.value"
               />
@@ -123,8 +127,8 @@
           </div>
         </div>
       </div>
-      <footer class="screen__footer footer">
-        <div class="footer__block sceleton"></div>
+      <footer class="screen__footer footer" :class="{'light-theme': useLightTheme}">
+        <div class="footer__block sceleton" :class="{'light-theme': useLightTheme}"></div>
         <div class="cross-icon">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 1.05L10.95 0L6 4.95L1.05 0L0 1.05L4.95 6L0 10.95L1.05 12L6 7.05L10.95 12L12 10.95L7.05 6L12 1.05Z" fill="white"/>
@@ -182,13 +186,17 @@ export default defineComponent({
       edit: false as boolean,
       deleteInventory: false as boolean,
       deleteInventoryCount: 0 as number,
-      choosedInventory: null as (EditInventory | null)
+      choosedInventory: null as (EditInventory | null),
+      useLightTheme: false as boolean
     }
   },
   mounted() {
     let matrix = localStorage.getItem('matrix');
     if(matrix) {
       this.matrix = JSON.parse(matrix);
+    }
+    if(this.useLightTheme){
+      document.documentElement.style.backgroundColor = "gray"
     }
   },
   components: {},
@@ -311,7 +319,10 @@ body {
     height: 100%;
     border-radius: 12px;
     border-collapse: collapse;
-    
+    &.light-theme {
+      background: #fff;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
   }
   &__table-cell {
     width: 20%;
@@ -400,7 +411,9 @@ body {
     &.active {
       transform: translateX(0);
     }
-
+    &.light-theme {
+      background: #fff;
+    }
 
     & .inventory__details {
       flex-grow: 1;
@@ -499,11 +512,12 @@ body {
         flex: 1;
         
       }
-    }&__count{
+    }
+    &__count{
       /* Seondary BG */
 
       width: 100%;
-      background: #262626;
+      
       margin-bottom: 20px;
       padding: 11px 12px;
       border: 1px solid #4D4D4D;
@@ -512,7 +526,17 @@ body {
       &::placeholder{
         color: rgba(255, 255, 255, 0.4)
       }
+
+      &.light-theme {
+        color: #000;
+      }
+
+      &.light-theme::placeholder {
+        color: rgba(0, 0, 0, 0.4)
+      }
     }
+  
+    
   
   
   }
@@ -533,6 +557,9 @@ body {
     z-index: 100;
     color: #FFFFFF;
     opacity: 0.4;
+    &.light-theme {
+        color: #000;
+    }
   }
 
 
@@ -547,6 +574,13 @@ body {
   border-radius: 12px;
   padding: 18px 14px;
   margin-right: 24px;
+  &.light-theme {
+    background: #fff;
+    border: 1px solid #E5E5E5;
+    color: #000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
   &__image{
     margin-bottom: 20px;
     position: relative;
@@ -599,7 +633,9 @@ body {
     height: 18px;
     border-radius: 8px;
     margin-bottom: 24px;
-  }}.left-sidebar{&__info{}}
+  }}.left-sidebar{&__info{
+
+  }}
 }.screen{
   // full screen
   width: 100vw;
@@ -626,6 +662,11 @@ body {
     border-radius: 12px;
     padding: 18px;
 
+    &.light-theme {
+        background-color: #fff;
+        border: 1px solid #E5E5E5;  
+        box-shadow:  0px 4px 4px rgba(0, 0, 0, 0.25);
+    } 
   }
   .footer{
     position: relative;
@@ -646,6 +687,13 @@ body {
   
   .sceleton{
     background: linear-gradient(90deg, #3C3C3C 0%, #444444 51.04%, #333333 100%);
+    
+    &.light-theme {
+      // for light theme
+      background:  linear-gradient(90deg, gray 0%, gray 51.04%, #33333312 100%);
+
+    }
+    
 
     position: relative;
     overflow: hidden;
