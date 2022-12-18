@@ -23,6 +23,14 @@
               <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
               <div class="info__description-item sceleton" :class="{'light-theme': useLightTheme}"></div>
             </div>
+            <div class="info__theme-toggler">
+              <label class="toggler__label" for="theme" :class="{'light-theme': useLightTheme}">
+                {{
+                  !useLightTheme ? "Light Theme" : "Dark Theme"
+                }}
+              </label>
+              <input class="toggler__checkbox" id="theme" type="checkbox" @change="changeTheme" v-model="useLightTheme"/>
+            </div>
           </div>
         </div>
         <div class="inventory">
@@ -283,9 +291,15 @@ export default defineComponent({
         localStorage.setItem('matrix', JSON.stringify(this.matrix))
         this.closeInventory();
       }
+    },
+
+    changeTheme(){
+      if(this.useLightTheme){
+        document.documentElement.style.backgroundColor = "gray"
+      }else {
+        document.documentElement.style.backgroundColor = "#1D1D1D"
+      }
     }
-
-
 
   },
 });
@@ -517,7 +531,7 @@ body {
       /* Seondary BG */
 
       width: 100%;
-      
+      background: transparent;
       margin-bottom: 20px;
       padding: 11px 12px;
       border: 1px solid #4D4D4D;
@@ -600,11 +614,34 @@ body {
     }
   }
   
-  .info{&__description{
+  .info__theme-toggler{
+    width: 100%;
+    display: flex;
+
+  }
+  .info{
+
+  
+  .toggler{
+    display: flex;
+    &__checkbox{}
+    &__label{
+      flex-grow: 1;
+      color: white;
+      &.light-theme {
+        color: black;
+      }
+    }
+  }
+
+
+    &__description{
 
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    
   }&__description-item{
     height: 10px;
     border-radius: 4px;
@@ -636,6 +673,11 @@ body {
   }}.left-sidebar{&__info{
 
   }}
+
+
+
+
+
 }.screen{
   // full screen
   width: 100vw;
@@ -688,15 +730,13 @@ body {
   .sceleton{
     background: linear-gradient(90deg, #3C3C3C 0%, #444444 51.04%, #333333 100%);
     
+    position: relative;
+    overflow: hidden;
     &.light-theme {
       // for light theme
       background:  linear-gradient(90deg, gray 0%, gray 51.04%, #33333312 100%);
 
     }
-    
-
-    position: relative;
-    overflow: hidden;
     &::after {
       position: absolute;
       top: 0;
@@ -709,7 +749,7 @@ body {
         rgba(#fff, 0) 0,
         rgba(#fff, 0.2) 20%,
         rgba(#fff, 0.5) 60%,
-        rgba(#fff, 0)
+        rgba(#fff, 0.3)
       );
       animation: shimmer 3s infinite linear;
       content: '';
